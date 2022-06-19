@@ -1,0 +1,11 @@
+version: '3'
+services:
+  taskmanager-go-be:
+    build:
+      context: .
+    container_name: taskmanager-go-be
+    ports: 
+      -  8080:8080
+    volumes:
+      - .:/Users/renatobogar/Documents/GitHub/taskmanager-go-be
+    working_dir: /Users/renatobogar/Documents/GitHub/taskmanager-go-be

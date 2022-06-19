@@ -46,6 +46,7 @@ func CreateFile(filePath string) error {
 		"ID", "Name", "Email", "Product Title", "Price", "Quantity",
 	})
 
+	//This package provides an Itoa() function which is equivalent to FormatInt(int64(x), 10). Or in other words, Itoa() function returns the string representation of x when the base is 10
 	for _, order := range orders {
 		data := []string{
 			strconv.Itoa(int(order.Id)),

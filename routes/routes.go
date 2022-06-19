@@ -44,4 +44,10 @@ func Setup(app *fiber.App) {
 	app.Get("/api/orders", controllers.AllOrders)
 	app.Post("/api/export", controllers.Export)
 	app.Get("/api/chart", controllers.Chart)
+
+	//Renato part
+	app.Get("/api/tasks/paginated",controllers.AllTasksPaginated)
+	app.Get("/api/tasks",controllers.AllTasks)
+	app.Get("/api/task/:id", controllers.GetTask)
+	app.Post("/api/tasks/export", controllers.ExportTasks)
 }
