@@ -97,4 +97,17 @@ func CreateTaskFile(filePath string) error {
 	return nil
 }
 
+func CreateTask(c *fiber.Ctx) error {
+	fmt.Println("befut az endpointba")
+	var task models.Task
+
+	if err := c.BodyParser(&task); err != nil {
+		return err
+	}
+
+	database.DB.Create(&task)
+
+	return c.JSON(task)
+}
+
 

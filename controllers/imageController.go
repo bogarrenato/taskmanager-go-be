@@ -16,8 +16,9 @@ func Upload(c *fiber.Ctx) error {
 		fmt.Println("error")
 		return err
 	}
-
+	
 	files := form.File["image"]
+	
 	filename := ""
 
 	fmt.Println("jön a files")
@@ -25,7 +26,7 @@ func Upload(c *fiber.Ctx) error {
 	for _, file := range files {
 		fmt.Println("Benne vagyok a forban")
 		filename = file.Filename
-
+		//taskid := form.File["fileid"]
 		if err := c.SaveFile(file, "./uploads/"+filename); err != nil {
 			fmt.Println("Megy a mentés")
 			return err

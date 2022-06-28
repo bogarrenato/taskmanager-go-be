@@ -1,12 +1,14 @@
 package controllers
 
 import (
+	"fmt"
+	"strconv"
 	"taskmanagerapp/database"
 	"taskmanagerapp/models"
 	"taskmanagerapp/util"
-	"github.com/gofiber/fiber/v2"
-	"strconv"
 	"time"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func Register(c *fiber.Ctx) error {
@@ -38,6 +40,7 @@ func Register(c *fiber.Ctx) error {
 }
 
 func Login(c *fiber.Ctx) error {
+
 	var data map[string]string
 
 	if err := c.BodyParser(&data); err != nil {
@@ -111,10 +114,14 @@ func Logout(c *fiber.Ctx) error {
 
 func UpdateInfo(c *fiber.Ctx) error {
 	var data map[string]string
+	fmt.Println("jön az adat")
+	
 
 	if err := c.BodyParser(&data); err != nil {
 		return err
 	}
+
+	fmt.Println(data)
 
 	cookie := c.Cookies("jwt")
 

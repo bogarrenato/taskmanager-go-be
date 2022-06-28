@@ -14,6 +14,8 @@ func AllProducts(c *fiber.Ctx) error {
 }
 
 func CreateProduct(c *fiber.Ctx) error {
+
+	
 	var product models.Product
 
 	if err := c.BodyParser(&product); err != nil {
