@@ -17,6 +17,7 @@ type Task struct {
 	UpdatedAt             string      `json:"updatedAt"                     gorm:"updated_at"`
 	CreatedAt             string      `json:"createdAt"                     gorm:"created_at"`
 	Total                 float32     `json:"total"                         gorm:"-"`
+	Attachments           []Attachment  `json:"attachments" gorm:"many2many:related_attachments"`
 }
 
 func (task *Task) Count(db *gorm.DB) int64 {

@@ -15,7 +15,7 @@ func AllProducts(c *fiber.Ctx) error {
 
 func CreateProduct(c *fiber.Ctx) error {
 
-	
+
 	var product models.Product
 
 	if err := c.BodyParser(&product); err != nil {
@@ -26,6 +26,8 @@ func CreateProduct(c *fiber.Ctx) error {
 
 	return c.JSON(product)
 }
+
+
 
 func GetProduct(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params("id"))

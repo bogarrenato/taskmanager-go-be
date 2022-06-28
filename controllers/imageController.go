@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"fmt"
+	"taskmanagerapp/database"
+	"taskmanagerapp/models"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -32,6 +34,13 @@ func Upload(c *fiber.Ctx) error {
 			return err
 		}
 	}
+
+	var task models.Attachment
+
+	task.Path ="http://localhost:8000/api/uploads/" + filename
+
+	database.DB.Create(&task)
+
 
 	return c.JSON(fiber.Map{
 		"url": "http://localhost:8000/api/uploads/" + filename,
