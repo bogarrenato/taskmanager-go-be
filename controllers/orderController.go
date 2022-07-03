@@ -4,7 +4,6 @@ import (
 	"taskmanagerapp/database"
 	"taskmanagerapp/models"
 	"encoding/csv"
-	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"os"
 	"strconv"
@@ -87,7 +86,6 @@ type Sales struct {
 
 func Chart(c *fiber.Ctx) error {
 	var sales []Sales
-	fmt.Println(c.Method())
 
 	database.DB.Raw(`
 		SELECT DATE_FORMAT(o.created_at, '%Y-%m-%d') as date, SUM(oi.price * oi.quantity) as sum

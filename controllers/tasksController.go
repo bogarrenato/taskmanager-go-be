@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/csv"
-	"fmt"
 	"os"
 	"strconv"
 	"taskmanagerapp/database"
@@ -35,23 +34,22 @@ func GetTask(c *fiber.Ctx) error {
         return c.SendStatus(404)
     }
 
+	database.DB.Preload("Attachments").Find(&task)
+
     return c.Status(200).JSON(&task)
 }
 
 func ExportTasks(c *fiber.Ctx) error {
-	fmt.Println("lefut az export csv")
 	filePath := "./csv/tasks.csv"
 
 	if err := CreateTaskFile(filePath); err != nil {
-		fmt.Println("lefut az error csv")
 		return err
 	}
-	fmt.Println("itt vagyok a c.download előtt")
+
 	return c.Download(filePath)
 }
 
 func CreateTaskFile(filePath string) error {
-	fmt.Println("lefut  a csv task")
 	file, err := os.Create(filePath)
 
 	if err != nil {
@@ -71,9 +69,6 @@ func CreateTaskFile(filePath string) error {
 		"ID", "Name", "Priority", "Description", "Created at", "Updated at", "Due date", "Is in progress",
 	})
 
-	fmt.Println("jön a tasks")
-	fmt.Println(tasks)
-
 	//This package provides an Itoa() function which is equivalent to FormatInt(int64(x), 10). Or in other words, Itoa() function returns the string representation of x when the base is 10
 	for _, task := range tasks {
 		data := []string{
@@ -90,7 +85,6 @@ func CreateTaskFile(filePath string) error {
 		if err := writer.Write(data); err != nil {
 			return err
 		}
-		fmt.Println("Benne vagyok az írás ciklusban")
 
 	}
 
@@ -98,7 +92,6 @@ func CreateTaskFile(filePath string) error {
 }
 
 func CreateTask(c *fiber.Ctx) error {
-	fmt.Println("befut az endpointba")
 	var task models.Task
 
 	if err := c.BodyParser(&task); err != nil {

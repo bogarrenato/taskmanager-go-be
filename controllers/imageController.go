@@ -9,13 +9,10 @@ import (
 )
 
 func Upload(c *fiber.Ctx) error {
-	fmt.Println(c)
 
 	form, err := c.MultipartForm()
-	fmt.Println("Bejött a kérés")
 
 	if err != nil {
-		fmt.Println("error")
 		return err
 	}
 	
@@ -23,24 +20,36 @@ func Upload(c *fiber.Ctx) error {
 	
 	filename := ""
 
+	
+	var attachment models.Attachment
 	fmt.Println("jön a files")
 	fmt.Println(files)
 	for _, file := range files {
-		fmt.Println("Benne vagyok a forban")
 		filename = file.Filename
-		//taskid := form.File["fileid"]
+		
+
 		if err := c.SaveFile(file, "./uploads/"+filename); err != nil {
-			fmt.Println("Megy a mentés")
 			return err
 		}
+
+		attachment.Path ="http://localhost:8000/api/uploads/" + filename
+
+		id := c.Params("id")
+    	var task models.Task
+
+    	result := database.DB.Find(&task, id)
+
+		if result.RowsAffected == 0 {
+			return c.SendStatus(404)
+		}
+
+		fmt.Println("task attachment")
+		fmt.Println(&task)
+		fmt.Println(&attachment)
+
+		database.DB.Model(&task).Association("Attachments").Append(&attachment)
+		
 	}
-
-	var task models.Attachment
-
-	task.Path ="http://localhost:8000/api/uploads/" + filename
-
-	database.DB.Create(&task)
-
 
 	return c.JSON(fiber.Map{
 		"url": "http://localhost:8000/api/uploads/" + filename,

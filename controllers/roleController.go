@@ -1,10 +1,10 @@
 package controllers
 
 import (
+	"strconv"
 	"taskmanagerapp/database"
 	"taskmanagerapp/models"
 	"github.com/gofiber/fiber/v2"
-	"strconv"
 )
 
 func AllRoles(c *fiber.Ctx) error {
@@ -26,9 +26,13 @@ func CreateRole(c *fiber.Ctx) error {
 
 	permissions := make([]models.Permission, len(list))
 
-	for i, permissionId := range list {
-		id, _ := strconv.Atoi(permissionId.(string))
 
+
+	for i, permissionId := range list {
+		
+		id, _ := strconv.Atoi(permissionId.(string))
+	
+		
 		permissions[i] = models.Permission{
 			Id: uint(id),
 		}
@@ -38,6 +42,7 @@ func CreateRole(c *fiber.Ctx) error {
 		Name:        roleDto["name"].(string),
 		Permissions: permissions,
 	}
+
 
 	database.DB.Create(&role)
 

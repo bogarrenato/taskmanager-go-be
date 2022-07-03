@@ -5,7 +5,6 @@ import (
 	"taskmanagerapp/models"
 	"taskmanagerapp/util"
 	"errors"
-	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"strconv"
 )
@@ -15,7 +14,6 @@ func IsAuthorized(c *fiber.Ctx, page string) error {
 
 	Id, err := util.ParseJwt(cookie)
 
-	fmt.Println(Id)
 
 	if err != nil {
 		return err
@@ -35,7 +33,6 @@ func IsAuthorized(c *fiber.Ctx, page string) error {
 
 	database.DB.Preload("Permissions").Find(&role)
 
-	fmt.Println(role.Permissions)
 	if c.Method() == "GET" {
 		for _, permission := range role.Permissions {
 			if permission.Name == "view_"+page || permission.Name == "edit_"+page {
@@ -44,7 +41,6 @@ func IsAuthorized(c *fiber.Ctx, page string) error {
 		}
 	} else {
 		for _, permission := range role.Permissions {
-			fmt.Println(permission.Name)
 			if permission.Name == "edit_"+page {
 				return nil
 			}

@@ -90,7 +90,13 @@ func User(c *fiber.Ctx) error {
 
 	id, _ := util.ParseJwt(cookie)
 
+	
+
 	var user models.User
+
+	fmt.Println(cookie)
+	fmt.Println("itt hasal el")
+	fmt.Println(id)
 
 	database.DB.Where("id = ?", id).First(&user)
 
@@ -114,14 +120,10 @@ func Logout(c *fiber.Ctx) error {
 
 func UpdateInfo(c *fiber.Ctx) error {
 	var data map[string]string
-	fmt.Println("jön az adat")
 	
-
 	if err := c.BodyParser(&data); err != nil {
 		return err
 	}
-
-	fmt.Println(data)
 
 	cookie := c.Cookies("jwt")
 
