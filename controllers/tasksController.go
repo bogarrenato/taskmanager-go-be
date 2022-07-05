@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/csv"
+	"fmt"
 	"os"
 	"strconv"
 	"taskmanagerapp/database"
@@ -46,6 +47,8 @@ func ExportTasks(c *fiber.Ctx) error {
 		return err
 	}
 
+	fmt.Println("ez a filepath")
+	fmt.Println(filePath)
 	return c.Download(filePath)
 }
 

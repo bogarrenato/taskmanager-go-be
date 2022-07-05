@@ -55,4 +55,5 @@ func Setup(app *fiber.App) {
 	app.Post("/api/tasks/add", controllers.CreateTask)
 
 	app.Post("/api/tasks/export", controllers.ExportTasks)
+	app.Post("/api/attachment/:id", controllers.DownloadAttachment)
 }
